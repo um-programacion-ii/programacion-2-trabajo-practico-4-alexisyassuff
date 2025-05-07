@@ -1,5 +1,4 @@
 package org.example.Clases;
-import org.example.Enum.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
