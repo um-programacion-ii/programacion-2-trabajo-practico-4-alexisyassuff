@@ -15,6 +15,12 @@ public class LibroServiceImpl implements LibroService {
     }
 
     @Override
+    public Libro buscarPorId(Long id) {
+        return libroRepository.findById(id)
+                .orElseThrow(() -> new LibroNoEncontradoExceptionId(id));
+    }
+
+    @Override
     public List<Libro> obtenerTodosLibros() {
         return libroRepository.findAll();
     }
