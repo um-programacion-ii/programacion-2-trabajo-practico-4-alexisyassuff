@@ -1,7 +1,5 @@
 package org.example.Clases;
 
-import org.example.Enum.EstadoLibro;
-
 import java.time.LocalDate;
 
 public class Prestamo {
