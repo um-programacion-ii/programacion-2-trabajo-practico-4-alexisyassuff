@@ -12,5 +12,5 @@ public interface UsuarioService {
     List<Usuario> obtenerTodosUsuarios();
     Usuario guardarUsuario(Usuario usuario);
     void eliminarUsuario(Long id);
-    Libro actualizarUsuario(Long id, Usuario usuario);
+    Usuario actualizarUsuario(Long id, Usuario usuario);
 }
