@@ -31,8 +31,9 @@ public class LibroServiceImpl implements LibroService {
     }
 
     @Override
-    public void eliminarLibro(Long id) {
+    public List<Libro> eliminarLibro(Long id) {
         libroRepository.deleteById(id);
+        return libroRepository.findAll();
     }
 
     @Override

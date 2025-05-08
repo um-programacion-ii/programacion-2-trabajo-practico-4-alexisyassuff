@@ -2,7 +2,6 @@ package org.example.ImplementacionesServicios;
 
 import org.example.Clases.Libro;
 import org.example.Clases.Usuario;
-import org.example.Excepciones.EmailNoEncontradoException;
 import org.example.Excepciones.LibroNoEncontradoExceptionISBN;
 import org.example.Excepciones.LibroNoEncontradoExceptionId;
 import org.example.Excepciones.UsuarioNoEncontradoException;
@@ -46,8 +45,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void eliminarUsuario(Long id) {
-         usuarioRepository.deleteById(id);
+    public List<Usuario> eliminarUsuario(Long id) {
+        usuarioRepository.deleteById(id);
+        return usuarioRepository.findAll();
     }
 
     @Override

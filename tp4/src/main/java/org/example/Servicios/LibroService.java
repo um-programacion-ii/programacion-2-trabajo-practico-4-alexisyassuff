@@ -10,6 +10,7 @@ public interface LibroService {
     Libro buscarPorIsbn(String isbn);
     List<Libro> obtenerTodosLibros();
     Libro guardarLibro(Libro libro);
-    void eliminarLibro(Long id);
+//    void eliminarLibro(Long id);
+    List<Libro> eliminarLibro(Long id);
     Libro actualizarLibro(Long id, Libro libro);
 }
