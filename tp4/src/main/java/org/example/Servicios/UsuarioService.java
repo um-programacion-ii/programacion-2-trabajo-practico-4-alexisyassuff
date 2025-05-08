@@ -11,6 +11,6 @@ public interface UsuarioService {
     Usuario buscarPorNombre(String nombre);
     List<Usuario> obtenerTodosUsuarios();
     Usuario guardarUsuario(Usuario usuario);
-    void eliminarUsuario(Long id);
+    List<Usuario> eliminarUsuario(Long id);
     Usuario actualizarUsuario(Long id, Usuario usuario);
 }

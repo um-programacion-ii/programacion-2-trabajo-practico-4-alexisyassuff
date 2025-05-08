@@ -1,4 +1,9 @@
 package org.example.Excepciones;
 
-public class PrestamoNoEncontradoException {
+import org.jetbrains.annotations.NotNull;
+
+public class PrestamoNoEncontradoException extends @NotNull RuntimeException {
+    public PrestamoNoEncontradoException(Long id) {
+        super("Prestamo con ID" + id + "no encontrado: ");
+    }
 }

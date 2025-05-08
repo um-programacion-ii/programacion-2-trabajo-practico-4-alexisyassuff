@@ -11,6 +11,6 @@ public interface PrestamoService {
     Prestamo buscarPorId(Long id);
     List<Prestamo> obtenerTodosPrestamos();
     Prestamo guardarPrestamo(Prestamo prestamo);
-    void eliminarPrestamo(Long id);
+    List<Prestamo> eliminarPrestamo(Long id);
     Prestamo actualizarPrestamo(Long id,  Prestamo prestamo);
 }
