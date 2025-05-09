@@ -27,14 +27,17 @@ public class PrestamoRepositoryImpl implements PrestamoRepository {
 
     @Override
     public Optional<Prestamo> findByUser(Usuario usuario) {
-        return Optional.ofNullable(prestamos.get(usuario));
+        return prestamos.values().stream()
+                .filter(prestamo -> prestamo.getUsuario().equals(usuario))
+                .findFirst();
     }
 
     @Override
     public Optional<Prestamo> findByBook(Libro libro) {
-        return Optional.ofNullable(prestamos.get(libro));
+        return prestamos.values().stream()
+                .filter(prestamo -> prestamo.getLibro().equals(libro))
+                .findFirst();
     }
-
     @Override
     public List<Prestamo> findAll() {
         return new ArrayList<>(prestamos.values());

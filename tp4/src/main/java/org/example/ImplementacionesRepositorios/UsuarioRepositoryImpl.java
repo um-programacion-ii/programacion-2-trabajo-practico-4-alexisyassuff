@@ -25,13 +25,15 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
     @Override
     public Optional<Usuario> findByName(String name) {
-        return Optional.ofNullable(usuarios.get(name));
-    }
+        return usuarios.values().stream()
+                .filter(usuario -> usuario.getNombre().equals(name))
+                .findFirst();    }
 
     @Override
     public Optional<Usuario> findByEmail(String email) {
-        return Optional.ofNullable(usuarios.get(email));
-    }
+        return usuarios.values().stream()
+                .filter(usuario -> usuario.getEmail().equals(email))
+                .findFirst();    }
 
     @Override
     public List<Usuario> findAll() {
