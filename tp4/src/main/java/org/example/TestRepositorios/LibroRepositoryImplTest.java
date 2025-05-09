@@ -1,27 +1,17 @@
 package org.example.TestRepositorios;
 import org.example.Clases.Libro;
-import org.example.Clases.Prestamo;
-import org.example.Clases.Usuario;
 import org.example.Enum.EstadoLibro;
-import org.example.Excepciones.LibroNoEncontradoExceptionISBN;
-import org.example.ImplementacionesServicios.*;
-import org.example.Repositorios.*;
 import org.example.ImplementacionesRepositorios.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
-
 public class LibroRepositoryImplTest {
+
     private LibroRepositoryImpl libroRepository;
 
     @BeforeEach
@@ -78,4 +68,17 @@ public class LibroRepositoryImplTest {
         assertTrue(resultado.isEmpty());
     }
 
+    @Test
+    void TestExistePorId() {
+        Libro libro = libroRepository.save(new Libro(null, "existente", "Existente", "Autor", EstadoLibro.DISPONIBLE));
+        boolean existe = libroRepository.existsById(libro.getId());
+
+        assertTrue(existe);
+    }
+
+    @Test
+    void TestNoExistePorId() {
+        boolean existe = libroRepository.existsById(123456L);
+        assertFalse(existe);
+    }
 }

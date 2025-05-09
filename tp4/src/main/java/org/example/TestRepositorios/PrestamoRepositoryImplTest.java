@@ -21,24 +21,25 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class PrestamoRepositoryImplTest {
-    private PrestamoRepositoryImpl prestamoRepository;
 
-    private Usuario usuario;
-    private Libro libro;
+    @Mock
+    private Libro libroMock;
+
+    @Mock
+    private Usuario usuarioMock;
+
+    private PrestamoRepositoryImpl prestamoRepository;
 
     @BeforeEach
     void setUp() {
         prestamoRepository = new PrestamoRepositoryImpl();
-        usuario = new Usuario(1L, "Juan", "juan@mail.com"); // sin "Usuario" delante
-        libro = new Libro(1L, "111-222-333", "Libro Prueba", "Autor", EstadoLibro.DISPONIBLE);
-        Libro libro1 = new Libro(2L, "111-222-555", "Libro Prueba 1", "Autor", EstadoLibro.PRESTADO);
     }
-
-
 
     @Test
     void buscarPorId() {
-        Prestamo prestamo = prestamoRepository.save(new Prestamo(1L, libro, usuario, LocalDate.parse("2025-04-30"), LocalDate.parse("2025-05-30")));
+        Prestamo prestamo = new Prestamo(1L, libroMock, usuarioMock, LocalDate.parse("2025-04-30"), LocalDate.parse("2025-05-30"));
+        prestamoRepository.save(prestamo);
+
         Optional<Prestamo> resultado = prestamoRepository.findById(prestamo.getId());
 
         assertTrue(resultado.isPresent());
@@ -47,34 +48,44 @@ public class PrestamoRepositoryImplTest {
 
     @Test
     void buscarPorUsuario() {
-        Prestamo prestamo = prestamoRepository.save(new Prestamo(1L, libro, usuario, LocalDate.parse("2025-04-30"), LocalDate.parse("2025-05-30")));
-        Optional<Prestamo> resultado = prestamoRepository.findByUser(usuario);
+        Prestamo prestamo = new Prestamo(1L, libroMock, usuarioMock, LocalDate.parse("2025-04-30"), LocalDate.parse("2025-05-30"));
+        prestamoRepository.save(prestamo);
+
+        Optional<Prestamo> resultado = prestamoRepository.findByUser(usuarioMock);
 
         assertTrue(resultado.isPresent());
-        assertEquals(usuario, resultado.get().getUsuario());
+        assertEquals(usuarioMock, resultado.get().getUsuario());
     }
 
     @Test
     void buscarPorLibro() {
-        Prestamo prestamo = prestamoRepository.save(new Prestamo(1L, libro, usuario, LocalDate.parse("2025-04-30"), LocalDate.parse("2025-05-30")));
-        Optional<Prestamo> resultado = prestamoRepository.findByBook(libro);
+        Prestamo prestamo = new Prestamo(1L, libroMock, usuarioMock, LocalDate.parse("2025-04-30"), LocalDate.parse("2025-05-30"));
+        prestamoRepository.save(prestamo);
+
+        Optional<Prestamo> resultado = prestamoRepository.findByBook(libroMock);
+
         assertTrue(resultado.isPresent());
-        assertEquals(libro, resultado.get().getLibro());
+        assertEquals(libroMock, resultado.get().getLibro());
     }
 
     @Test
     void listarTodos() {
-        Libro libro1 = new Libro(2L, "111-222-555", "Libro Prueba 1", "Autor", EstadoLibro.PRESTADO);
-        Prestamo prestamo = prestamoRepository.save(new Prestamo(1L, libro, usuario, LocalDate.parse("2025-04-30"), LocalDate.parse("2025-05-30")));
-        Prestamo prestamo1 = prestamoRepository.save(new Prestamo(2L, libro1, usuario, LocalDate.parse("2025-04-30"), LocalDate.parse("2025-05-30")));
+        Prestamo prestamo1 = new Prestamo(1L, libroMock, usuarioMock, LocalDate.parse("2025-04-30"), LocalDate.parse("2025-05-30"));
+        Prestamo prestamo2 = new Prestamo(2L, libroMock, usuarioMock, LocalDate.parse("2025-04-30"), LocalDate.parse("2025-05-30"));
+
+        prestamoRepository.save(prestamo1);
+        prestamoRepository.save(prestamo2);
 
         List<Prestamo> prestamos = prestamoRepository.findAll();
+
         assertEquals(2, prestamos.size());
     }
 
     @Test
     void eliminarPorId() {
-        Prestamo prestamo = prestamoRepository.save(new Prestamo(1L, libro, usuario, LocalDate.parse("2025-04-30"), LocalDate.parse("2025-05-30")));
+        Prestamo prestamo = new Prestamo(1L, libroMock, usuarioMock, LocalDate.parse("2025-04-30"), LocalDate.parse("2025-05-30"));
+        prestamoRepository.save(prestamo);
+
         prestamoRepository.deleteById(prestamo.getId());
 
         assertFalse(prestamoRepository.findById(prestamo.getId()).isPresent());
@@ -82,9 +93,12 @@ public class PrestamoRepositoryImplTest {
 
     @Test
     void existePorId() {
-        Prestamo prestamo = prestamoRepository.save(new Prestamo(1L, libro, usuario, LocalDate.parse("2025-04-30"), LocalDate.parse("2025-05-30")));
+        Prestamo prestamo = new Prestamo(1L, libroMock, usuarioMock, LocalDate.parse("2025-04-30"), LocalDate.parse("2025-05-30"));
+        prestamoRepository.save(prestamo);
+
         boolean existe = prestamoRepository.existsById(prestamo.getId());
 
         assertTrue(existe);
     }
+
 }
