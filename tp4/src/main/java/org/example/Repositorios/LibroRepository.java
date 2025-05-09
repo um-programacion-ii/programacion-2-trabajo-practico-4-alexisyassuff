@@ -10,7 +10,7 @@ public interface LibroRepository {
         //Optional devuelve 0 o 1 solo, no hay busqueda parcial
         Optional<Libro> findById(Long id);
         Optional<Libro> findByIsbn(String isbn);
-        //List pq pueden ser cero, uno o muchos
+        //List pq pueden ser cero, uno o muchosx
         List<Libro> findAll();
         void deleteById(Long id);
         boolean existsById(Long id);
