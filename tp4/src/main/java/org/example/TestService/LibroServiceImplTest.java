@@ -29,15 +29,12 @@ public class LibroServiceImplTest {
 
     @Test
     void cuandoBuscarPorIsbnExiste_entoncesRetornaLibro() {
-        // Arrange
         String isbn = "123-456-789";
         Libro libroEsperado = new Libro(1L, isbn, "Test Book", "Test Author", EstadoLibro.DISPONIBLE);
         when(libroRepository.findByIsbn(isbn)).thenReturn(Optional.of(libroEsperado));
 
-        // Act
         Libro resultado = libroService.buscarPorIsbn(isbn);
 
-        // Assert
         assertNotNull(resultado);
         assertEquals(isbn, resultado.getIsbn());
         verify(libroRepository).findByIsbn(isbn);
@@ -45,11 +42,9 @@ public class LibroServiceImplTest {
 
     @Test
     void cuandoBuscarPorIsbnNoExiste_entoncesLanzaExcepcion() {
-        // Arrange
         String isbn = "123-456-789";
         when(libroRepository.findByIsbn(isbn)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(LibroNoEncontradoExceptionISBN.class, () ->
                 libroService.buscarPorIsbn(isbn)
         );
@@ -57,7 +52,6 @@ public class LibroServiceImplTest {
 
     @Test
     void testeoEliminarLibro() {
-        // Arrange
         Long id1 = 1L;
         Long id2 = 2L;
         Libro libro1 = new Libro(1L, "123-456-789", "Test Book", "Test Author", EstadoLibro.DISPONIBLE);
@@ -67,10 +61,8 @@ public class LibroServiceImplTest {
         doNothing().when(libroRepository).deleteById(id1);
         when(libroRepository.findAll()).thenReturn(resultadoEsperado);
 
-        // Act
         List<Libro> resultado = libroService.eliminarLibro(id1);
 
-        // Assert
         assertNotNull(resultado);
         assertEquals(1, resultado.size());
         assertFalse(resultado.contains(libro1));
@@ -79,7 +71,6 @@ public class LibroServiceImplTest {
 
     @Test
     void testeoTraerTodosLibrosTamano() {
-        // Arrange
         Long id1 = 1L;
         Long id2 = 2L;
         Libro libro1 = new Libro(id1, "123-456-789", "Test Book", "Test Author", EstadoLibro.DISPONIBLE);
@@ -87,17 +78,14 @@ public class LibroServiceImplTest {
         List<Libro> listaLibros = List.of(libro1, libro2);
         when(libroRepository.findAll()).thenReturn(listaLibros);
 
-        // Act
         List<Libro> resultado = libroService.obtenerTodosLibros();
 
-        // Assert
         assertNotNull(resultado);
         assertEquals(2, resultado.size());
     }
 
     @Test
     void testeoTraerTodosLibrosObjetos() {
-        // Arrange
         Long id1 = 1L;
         Long id2 = 2L;
         Libro libro1 = new Libro(id1, "123-456-789", "Test Book", "Test Author", EstadoLibro.DISPONIBLE);
@@ -105,10 +93,8 @@ public class LibroServiceImplTest {
         List<Libro> listaLibros = List.of(libro1, libro2);
         when(libroRepository.findAll()).thenReturn(listaLibros);
 
-        // Act
         List<Libro> resultado = libroService.obtenerTodosLibros();
 
-        // Assert
         assertNotNull(resultado);
         assertTrue(resultado.contains(libro1));
         assertTrue(resultado.contains(libro2));
@@ -117,15 +103,12 @@ public class LibroServiceImplTest {
 
     @Test
     void testGuardarLibro() {
-        // Arrange
         Libro libro1 = new Libro(1L, "123-456-789", "Test Book", "Test Author", EstadoLibro.DISPONIBLE);
 
         when(libroRepository.save(libro1)).thenReturn(libro1);
 
-        // Act
         Libro resultado = libroService.guardarLibro(libro1);
 
-        // Assert
         assertNotNull(resultado);
         assertEquals(libro1, resultado);
         verify(libroRepository).save(libro1);
@@ -134,7 +117,6 @@ public class LibroServiceImplTest {
 
     @Test
     void testActualizarLibro() {
-        // Arrange
         Long id = 1L;
         Libro libro1 = new Libro(id, "123-456-789", "Test Book", "Test Author", EstadoLibro.DISPONIBLE);
 
@@ -145,10 +127,8 @@ public class LibroServiceImplTest {
         when(libroRepository.existsById(id)).thenReturn(true);
         when(libroRepository.save(any(Libro.class))).thenReturn(libroActualizado);
 
-        // Act
         Libro resultado = libroService.actualizarLibro(id, libro1);
 
-        // Assert
         assertNotNull(resultado);
         assertEquals(id, resultado.getId());
         verify(libroRepository).existsById(id);

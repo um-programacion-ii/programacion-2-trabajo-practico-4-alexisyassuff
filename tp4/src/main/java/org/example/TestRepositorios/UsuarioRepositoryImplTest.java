@@ -22,13 +22,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class UsuarioRepositoryImplTest {
+
     private UsuarioRepositoryImpl usuarioRepository;
 
     @BeforeEach
     void setUp() {
         usuarioRepository = new UsuarioRepositoryImpl();
     }
-
 
     @Test
     void busquedaIdExiste() {
@@ -49,6 +49,7 @@ public class UsuarioRepositoryImplTest {
     void busquedaNombreExiste() {
         Usuario usuario = usuarioRepository.save(new Usuario(null, "Carlos Perez", "carlos@mail.com"));
         Optional<Usuario> resultado = usuarioRepository.findByName("Carlos Perez");
+
         assertTrue(resultado.isPresent());
         assertEquals(usuario.getNombre(), resultado.get().getNombre());
     }
@@ -61,7 +62,7 @@ public class UsuarioRepositoryImplTest {
 
     @Test
     void busquedaEmailExiste() {
-        usuarioRepository.save(new Usuario(1L, "Laura", "laura@mail.com"));
+        usuarioRepository.save(new Usuario(null, "Laura", "laura@mail.com"));
         Optional<Usuario> resultado = usuarioRepository.findByEmail("laura@mail.com");
 
         assertTrue(resultado.isPresent());
@@ -93,4 +94,17 @@ public class UsuarioRepositoryImplTest {
         assertTrue(resultado.isEmpty());
     }
 
+    @Test
+    void TestExistePorId() {
+        Usuario usuario = usuarioRepository.save(new Usuario(null, "Existe", "existe@mail.com"));
+        boolean existe = usuarioRepository.existsById(usuario.getId());
+
+        assertTrue(existe);
+    }
+
+    @Test
+    void TestNoExistePorId() {
+        boolean existe = usuarioRepository.existsById(999L);
+        assertFalse(existe);
+    }
 }

@@ -31,23 +31,19 @@ public class PrestamoServiceImplTest {
 
     @Test
     void testeoBusquedaId() {
-        // Arrange
         Long id1 = 1L;
         Libro libro1 = new Libro(1L, "123-456-789", "Test Book", "Test Author", EstadoLibro.DISPONIBLE);
         Usuario Usuario1 = new Usuario(1L, "Daniel de Rossi", "daniel@gmail.com");
         Prestamo prestamo1 = new Prestamo(id1, libro1, Usuario1,LocalDate.parse("2025-04-04"), LocalDate.parse("2025-05-04"));
         when(prestamoRepository.findById(id1)).thenReturn(Optional.of(prestamo1));
 
-        // Act
         Prestamo resultado = prestamoService.buscarPorId(id1);
 
-        // Assert
         assertNotNull(resultado);
         assertEquals(prestamo1, resultado);
     }
     @Test
     void testeoEliminarPrestamo() {
-        // Arrange
         Long id1 = 1L;
         Long id2 = 2L;
         Libro libro1 = new Libro(1L, "123-456-789", "Test Book", "Test Author", EstadoLibro.PRESTADO);
@@ -60,10 +56,8 @@ public class PrestamoServiceImplTest {
         doNothing().when(prestamoRepository).deleteById(id2);
         when(prestamoRepository.findAll()).thenReturn(resultadoEsperado);
 
-        // Act
         List<Prestamo> resultado = prestamoService.eliminarPrestamo(id2);
 
-        // Assert
         assertNotNull(resultado);
         assertEquals(1, resultado.size());
         assertFalse(resultado.contains(prestamo2));
@@ -72,7 +66,6 @@ public class PrestamoServiceImplTest {
 
     @Test
     void testGuardarPrestamo() {
-        // Arrange
         Prestamo prestamo = new Prestamo(
                 1L,
                 new Libro(1L, "123-456", "Libro Test", "Autor", EstadoLibro.DISPONIBLE),
@@ -83,10 +76,8 @@ public class PrestamoServiceImplTest {
 
         when(prestamoRepository.save(prestamo)).thenReturn(prestamo);
 
-        // Act
         Prestamo resultado = prestamoService.guardarPrestamo(prestamo);
 
-        // Assert
         assertNotNull(resultado);
         assertEquals(prestamo, resultado);
         verify(prestamoRepository).save(prestamo);
@@ -95,7 +86,6 @@ public class PrestamoServiceImplTest {
 
     @Test
     void testActualizarPrestamo() {
-        // Arrange
         Long id = 1L;
         Prestamo prestamo = new Prestamo(
                 null,
@@ -116,10 +106,8 @@ public class PrestamoServiceImplTest {
         when(prestamoRepository.existsById(id)).thenReturn(true);
         when(prestamoRepository.save(any(Prestamo.class))).thenReturn(prestamoActualizado);
 
-        // Act
         Prestamo resultado = prestamoService.actualizarPrestamo(id, prestamo);
 
-        // Assert
         assertNotNull(resultado);
         assertEquals(id, resultado.getId());
         verify(prestamoRepository).existsById(id);
